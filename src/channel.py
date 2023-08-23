@@ -14,9 +14,57 @@ class Channel:
         self._title = self._channel_info['items'][0]['snippet']['title']
         self._description = self._channel_info['items'][0]['snippet']['description']
         self._url = f'https://www.youtube.com/channel/{self._channel_id}'
-        self._subscribers = self._channel_info['items'][0]['statistics']['subscriberCount']
+        self._subscribers =int(self._channel_info['items'][0]['statistics']['subscriberCount'])
         self._video_count = self._channel_info['items'][0]['statistics']['videoCount']
-        self._view_count = self._channel_info['items'][0]['statistics']['viewCount']
+        self._view_count = int(self._channel_info['items'][0]['statistics']['viewCount'])
+
+    def __str__(self):
+        """
+        Вывод вида : Название канала(ссылка)
+        """
+        return f'{self.title} ({self.url})'
+
+    def __add__(self, other):
+        """
+        Сложение подписчиков
+        """
+        return self.subscribers + other.subscribers
+
+    def __sub__(self, other):
+        """
+        Вычитание подписчиков
+        """
+        return self.subscribers - other.subscribers
+
+    def __le__(self, other):
+        """
+        Возвращает True если у 1го меньше или равно подписчиков
+        """
+        return self.subscribers <= other.subscribers
+
+    def __lt__(self, other):
+        """
+        Возвращает True если 1го меньше подписчиков
+        """
+        return self.subscribers < other.subscribers
+
+    def __gt__(self, other):
+        """
+        Возвращает True если у 1го больше подписчиков
+        """
+        return self.subscribers > other.subscribers
+
+    def __ge__(self, other):
+        """
+        Возвращает True если у 1го больше или равно подписчиков
+        """
+        return self.subscribers >= other.subscribers
+
+    def __eq__(self, other):
+        """
+        Возвращает True если равное количество подписчиков
+        """
+        return self.subscribers == other.subscribers
 
     @classmethod
     def get_service(cls):
@@ -49,3 +97,11 @@ class Channel:
     @property
     def video_count(self):
         return self._video_count
+
+    @property
+    def view_count(self):
+        return self._view_count
+
+    @property
+    def subscribers(self):
+        return self._subscribers
